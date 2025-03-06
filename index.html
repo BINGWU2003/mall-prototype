@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商城APP原型设计</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .prototype-section {
+            margin-bottom: 50px;
+        }
+        .prototype-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            color: #333;
+        }
+        .prototype-description {
+            margin-bottom: 20px;
+            color: #666;
+            line-height: 1.6;
+        }
+        .prototype-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        .phone-frame {
+            width: 320px;
+            height: 650px;
+            background-color: #fff;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            border: 10px solid #333;
+            border-top-width: 60px;
+            border-bottom-width: 60px;
+        }
+        .phone-frame:before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 10px;
+            background: #333;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+        .phone-frame:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #333;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+        }
+        .screen {
+            width: 100%;
+            height: 100%;
+            background-color: #f8f8f8;
+            overflow-y: auto;
+            position: relative;
+        }
+        .screen-title {
+            text-align: center;
+            font-size: 14px;
+            padding: 5px;
+            background-color: #f0f0f0;
+            color: #666;
+        }
+        
+        /* 买家首页样式 */
+        .status-bar {
+            height: 24px;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            align-items: center;
+            font-size: 12px;
+            color: #333;
+        }
+        .header {
+            background-color: #ff6b6b;
+            padding: 15px;
+            color: white;
+        }
+        .search-bar {
+            display: flex;
+            background-color: white;
+            border-radius: 20px;
+            padding: 8px 15px;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .search-bar i {
+            margin-right: 10px;
+            color: #999;
+        }
+        .search-input {
+            border: none;
+            flex: 1;
+            outline: none;
+            font-size: 14px;
+            color: #333;
+        }
+        .banner {
+            height: 150px;
+            background-color: #eee;
+            margin: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .category-section {
+            padding: 15px;
+        }
+        .category-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .category-title span:last-child {
+            color: #999;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .category-icons {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .category-item {
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 5px;
+            color: #ff6b6b;
+        }
+        .category-name {
+            font-size: 12px;
+            color: #666;
+        }
+        .product-section {
+            padding: 0 15px 15px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .product-image {
+            height: 120px;
+            background-color: #eee;
+            position: relative;
+        }
+        .product-info {
+            padding: 10px;
+        }
+        .product-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .product-price {
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .product-sales {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #eee;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: #999;
+        }
+        .nav-item.active {
+            color: #ff6b6b;
+        }
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        
+        /* 商品详情页样式 */
+        .detail-header {
+            background-color: white;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            position: relative;
+            border-bottom: 1px solid #eee;
+        }
+        .back-button {
+            font-size: 18px;
+            color: #333;
+        }
+        .header-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        .header-actions {
+            position: absolute;
+            right: 15px;
+            display: flex;
+            gap: 15px;
+        }
+        .header-action {
+            font-size: 18px;
+            color: #333;
+        }
+        .product-gallery {
+            height: 300px;
+            background-color: #eee;
+            position: relative;
+        }
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-indicator {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+        .product-basic-info {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .product-detail-price {
+            color: #ff6b6b;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .product-detail-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .product-tag {
+            background-color: #fff5f5;
+            color: #ff6b6b;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .product-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #999;
+            font-size: 12px;
+        }
+        .product-options {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .option-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .option-item:last-child {
+            border-bottom: none;
+        }
+        .option-label {
+            color: #666;
+            font-size: 14px;
+        }
+        .option-value {
+            color: #999;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        .option-value i {
+            margin-left: 5px;
+        }
+        .product-detail-section {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title:before {
+            content: '';
+            width: 3px;
+            height: 16px;
+            background-color: #ff6b6b;
+            margin-right: 8px;
+            border-radius: 3px;
+        }
+        .detail-content {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .detail-image {
+            width: 100%;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .bottom-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: white;
+            display: flex;
+            border-top: 1px solid #eee;
+        }
+        .action-icon {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+        .action-icon i {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        .action-button {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .add-cart-button {
+            background-color: #ff9f43;
+        }
+        .buy-now-button {
+            background-color: #ff6b6b;
+        }
+        
+        /* 订单管理页面样式 */
+        .order-header {
+            background-color: #ff6b6b;
+            padding: 15px;
+            color: white;
+            position: relative;
+        }
+        .order-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .order-tabs {
+            display: flex;
+            background-color: white;
+            border-bottom: 1px solid #eee;
+        }
+        .order-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+            color: #666;
+            position: relative;
+        }
+        .order-tab.active {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        .order-tab.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background-color: #ff6b6b;
+            border-radius: 2px;
+        }
+        .order-list {
+            padding: 10px 15px;
+        }
+        .order-item {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .order-shop {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .shop-icon {
+            font-size: 16px;
+            margin-right: 8px;
+            color: #333;
+        }
+        .shop-name {
+            font-size: 14px;
+            color: #333;
+            flex: 1;
+        }
+        .order-status {
+            font-size: 14px;
+            color: #ff6b6b;
+        }
+        .order-product {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .order-product-image {
+            width: 80px;
+            height: 80px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            margin-right: 10px;
+            overflow: hidden;
+        }
+        .order-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .order-product-info {
+            flex: 1;
+        }
+        .order-product-name {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .order-product-spec {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        .order-product-price {
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+        }
+        .order-product-quantity {
+            font-size: 14px;
+            color: #999;
+        }
+        .order-summary {
+            padding: 10px 15px;
+            text-align: right;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .order-total {
+            font-size: 14px;
+            color: #333;
+        }
+        .order-total-price {
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+        .order-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 15px;
+            gap: 10px;
+        }
+        .order-action-button {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #666;
+        }
+        .order-action-button.primary {
+            background-color: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+        .order-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 0;
+            color: #999;
+        }
+        .order-empty i {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        .order-empty-text {
+            font-size: 14px;
+        }
+        
+        /* 我的店铺页面样式 */
+        .shop-header {
+            background-color: #4a6bdf;
+            padding: 15px;
+            color: white;
+            position: relative;
+        }
+        .shop-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .shop-info {
+            background-color: #4a6bdf;
+            padding: 0 15px 20px;
+            color: white;
+        }
+        .shop-profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .shop-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: white;
+            overflow: hidden;
+            margin-right: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .shop-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .shop-name-info {
+            flex: 1;
+        }
+        .shop-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .shop-level {
+            display: inline-block;
+            background-color: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        .shop-stats {
+            display: flex;
+            justify-content: space-between;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 10px 15px;
+        }
+        .shop-stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .shop-stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .shop-stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        .shop-quick-actions {
+            background-color: white;
+            border-radius: 10px;
+            margin: -15px 15px 15px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .quick-action-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        .quick-action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .quick-action-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #f5f7ff;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #4a6bdf;
+            font-size: 20px;
+        }
+        .quick-action-label {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        .shop-section {
+            background-color: white;
+            border-radius: 10px;
+            margin: 0 15px 15px;
+            padding: 15px;
+        }
+        .shop-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .shop-section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        .shop-section-title i {
+            margin-right: 8px;
+            color: #4a6bdf;
+        }
+        .shop-section-more {
+            font-size: 12px;
+            color: #999;
+        }
+        .shop-section-more i {
+            margin-left: 5px;
+        }
+        .product-manage-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .product-manage-item {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .product-manage-image {
+            height: 100px;
+            background-color: #eee;
+            position: relative;
+        }
+        .product-manage-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .product-manage-status {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        .product-manage-info {
+            padding: 8px;
+        }
+        .product-manage-name {
+            font-size: 12px;
+            color: #333;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 36px;
+        }
+        .product-manage-price {
+            color: #ff6b6b;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .product-manage-sales {
+            font-size: 10px;
+            color: #999;
+        }
+        .order-manage-item {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .order-manage-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .order-manage-info {
+            flex: 1;
+        }
+        .order-manage-id {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .order-manage-time {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        .order-manage-product {
+            font-size: 12px;
+            color: #666;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .order-manage-status {
+            font-size: 14px;
+            color: #4a6bdf;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .order-manage-price {
+            font-size: 12px;
+            color: #333;
+            margin-top: 5px;
+        }
+        .data-chart {
+            height: 150px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .data-chart:before {
+            content: '销售趋势图';
+            position: absolute;
+            color: #999;
+            font-size: 14px;
+        }
+        .data-chart:after {
+            content: '';
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            height: 60px;
+            background: linear-gradient(90deg, #4a6bdf 0%, #6b8dff 100%);
+            opacity: 0.2;
+            border-radius: 8px;
+        }
+        .data-chart-line {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, #4a6bdf 0%, #6b8dff 100%);
+        }
+        .data-chart-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #4a6bdf;
+            border-radius: 50%;
+            bottom: 31px;
+        }
+        .data-chart-dot:nth-child(1) {
+            left: 20%;
+            bottom: 60px;
+        }
+        .data-chart-dot:nth-child(2) {
+            left: 40%;
+            bottom: 80px;
+        }
+        .data-chart-dot:nth-child(3) {
+            left: 60%;
+            bottom: 50px;
+        }
+        .data-chart-dot:nth-child(4) {
+            left: 80%;
+            bottom: 70px;
+        }
+        .data-summary {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .data-summary-item {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .data-summary-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4a6bdf;
+            margin-bottom: 5px;
+        }
+        .data-summary-label {
+            font-size: 12px;
+            color: #666;
+        }
+        .seller-bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #eee;
+        }
+        .seller-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: #999;
+        }
+        .seller-nav-item.active {
+            color: #4a6bdf;
+        }
+        .seller-nav-item i {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        
+        /* 首页资讯页面样式 */
+        .news-header {
+            background-color: #ff6b6b;
+            padding: 15px;
+            color: white;
+            position: relative;
+        }
+        .news-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .news-tabs {
+            display: flex;
+            background-color: white;
+            border-bottom: 1px solid #eee;
+            padding: 0 10px;
+        }
+        .news-tab {
+            padding: 12px 15px;
+            font-size: 14px;
+            color: #666;
+            position: relative;
+            white-space: nowrap;
+        }
+        .news-tab.active {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        .news-tab.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            right: 15px;
+            height: 2px;
+            background-color: #ff6b6b;
+            border-radius: 2px;
+        }
+        .news-search {
+            padding: 10px 15px;
+            background-color: white;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .news-search-bar {
+            display: flex;
+            background-color: #f5f5f5;
+            border-radius: 20px;
+            padding: 8px 15px;
+            align-items: center;
+        }
+        .news-search-bar i {
+            margin-right: 10px;
+            color: #999;
+        }
+        .news-search-input {
+            border: none;
+            background: transparent;
+            flex: 1;
+            outline: none;
+            font-size: 14px;
+            color: #333;
+        }
+        .news-banner {
+            padding: 15px;
+            background-color: white;
+        }
+        .news-banner-image {
+            height: 150px;
+            background-color: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .news-banner-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .news-banner-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .news-section {
+            margin-top: 10px;
+            background-color: white;
+            padding: 15px;
+        }
+        .news-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .news-section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        .news-section-title i {
+            margin-right: 8px;
+            color: #ff6b6b;
+        }
+        .news-section-more {
+            font-size: 12px;
+            color: #999;
+        }
+        .news-section-more i {
+            margin-left: 5px;
+        }
+        .news-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .news-item {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .news-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .news-item-image {
+            width: 100px;
+            height: 70px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin-right: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .news-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .news-item-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .news-item-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .news-item-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #999;
+        }
+        .news-item-tag {
+            background-color: #fff5f5;
+            color: #ff6b6b;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            margin-right: 5px;
+        }
+        .news-promo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .news-promo-item {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        .news-promo-image {
+            height: 100px;
+            background-color: #eee;
+        }
+        .news-promo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .news-promo-content {
+            padding: 8px;
+        }
+        .news-promo-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 36px;
+        }
+        .news-promo-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #999;
+        }
+        .news-topic-list {
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .news-topic-item {
+            flex: 0 0 auto;
+            width: 120px;
+            margin-right: 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .news-topic-image {
+            height: 80px;
+            background-color: #eee;
+            position: relative;
+        }
+        .news-topic-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .news-topic-title {
+            padding: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+        /* 广告申请页面样式 */
+        .ad-header {
+            background-color: #4a6bdf;
+            padding: 15px;
+            color: white;
+            position: relative;
+        }
+        .ad-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .ad-tabs {
+            display: flex;
+            background-color: white;
+            border-bottom: 1px solid #eee;
+        }
+        .ad-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+            color: #666;
+            position: relative;
+        }
+        .ad-tab.active {
+            color: #4a6bdf;
+            font-weight: bold;
+        }
+        .ad-tab.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background-color: #4a6bdf;
+            border-radius: 2px;
+        }
+        .ad-section {
+            background-color: white;
+            border-radius: 10px;
+            margin: 15px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .ad-section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .ad-section-title i {
+            margin-right: 8px;
+            color: #4a6bdf;
+        }
+        .ad-positions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .ad-position-item {
+            background-color: #f5f7ff;
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #e0e7ff;
+            position: relative;
+        }
+        .ad-position-item.hot:before {
+            content: '热门';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff6b6b;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        .ad-position-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .ad-position-desc {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .ad-position-price {
+            font-size: 12px;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        .ad-position-stats {
+            font-size: 10px;
+            color: #999;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        .ad-form-group {
+            margin-bottom: 15px;
+        }
+        .ad-form-label {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .ad-form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .ad-form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: white;
+        }
+        .ad-form-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            min-height: 80px;
+            resize: none;
+        }
+        .ad-upload-area {
+            border: 1px dashed #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .ad-upload-icon {
+            font-size: 24px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        .ad-upload-text {
+            font-size: 12px;
+            color: #666;
+        }
+        .ad-submit-button {
+            background-color: #4a6bdf;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+        }
+        .ad-history-item {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+        .ad-history-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .ad-history-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+        .ad-history-status {
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .ad-history-status.pending {
+            background-color: #fff5e6;
+            color: #ff9f43;
+        }
+        .ad-history-status.approved {
+            background-color: #e6fff2;
+            color: #28c76f;
+        }
+        .ad-history-status.rejected {
+            background-color: #ffe6e6;
+            color: #ea5455;
+        }
+        .ad-history-info {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .ad-history-info span {
+            margin-right: 10px;
+        }
+        .ad-history-desc {
+            font-size: 12px;
+            color: #999;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .ad-history-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .ad-history-action {
+            font-size: 12px;
+            color: #4a6bdf;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>商城APP原型设计</h1>
+        
+        <!-- 买家首页 -->
+        <div class="prototype-section">
+            <h2 class="prototype-title">买家端 - 首页</h2>
+            <p class="prototype-description">
+                买家首页展示商城的主要内容，包括搜索栏、轮播广告、商品分类和推荐商品。用户可以通过底部导航栏切换到其他功能页面。
+            </p>
+            <div class="prototype-container">
+                <div class="phone-frame">
+                    <div class="screen-title">买家首页</div>
+                    <div class="screen">
+                        <div class="status-bar">
+                            <span>12:30</span>
+                            <div>
+                                <i class="fas fa-signal"></i>
+                                <i class="fas fa-wifi"></i>
+                                <i class="fas fa-battery-three-quarters"></i>
+                            </div>
+                        </div>
+                        <div class="header">
+                            <div class="search-bar">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="search-input" placeholder="搜索商品">
+                            </div>
+                        </div>
+                        <div class="banner">
+                            <img src="https://via.placeholder.com/300x150/ff6b6b/ffffff?text=促销活动" alt="Banner">
+                        </div>
+                        <div class="category-section">
+                            <div class="category-title">
+                                <span>商品分类</span>
+                                <span>查看全部 <i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="category-icons">
+                                <div class="category-item">
+                                    <div class="category-icon">
+                                        <i class="fas fa-tshirt"></i>
+                                    </div>
+                                    <div class="category-name">服装</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-icon">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div class="category-name">电子</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-icon">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                    <div class="category-name">美食</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-icon">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <div class="category-name">家居</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-icon">
+                                        <i class="fas fa-heartbeat"></i>
+                                    </div>
+                                    <div class="category-name">健康</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-icon">
+                                        <i class="fas fa-gamepad"></i>
+                                    </div>
+                                    <div class="category-name">游戏</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-icon">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <div class="category-name">图书</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-icon">
+                                        <i class="fas fa-gift"></i>
+                                    </div>
+                                    <div class="category-name">礼品</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-icon">
+                                        <i class="fas fa-car"></i>
+                                    </div>
+                                    <div class="category-name">汽车</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-icon">
+                                        <i class="fas fa-ellipsis-h"></i>
+                                    </div>
+                                    <div class="category-name">更多</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-section">
+                            <div class="category-title">
+                                <span>推荐商品</span>
+                                <span>更多 <i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="product-grid">
+                                <div class="product-card">
+                                    <div class="product-image">
+                                        <img src="https://via.placeholder.com/150/eeeeee/999999?text=商品1" alt="Product" style="width:100%;height:100%;">
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="product-name">时尚休闲连帽卫衣男女同款</div>
+                                        <div class="product-price">¥129.00</div>
+                                        <div class="product-sales">已售 2342</div>
+                                    </div>
+                                </div>
+                                <div class="product-card">
+                                    <div class="product-image">
+                                        <img src="https://via.placeholder.com/150/eeeeee/999999?text=商品2" alt="Product" style="width:100%;height:100%;">
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="product-name">新款智能手表多功能运动监测</div>
+                                        <div class="product-price">¥299.00</div>
+                                        <div class="product-sales">已售 1253</div>
+                                    </div>
+                                </div>
+                                <div class="product-card">
+                                    <div class="product-image">
+                                        <img src="https://via.placeholder.com/150/eeeeee/999999?text=商品3" alt="Product" style="width:100%;height:100%;">
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="product-name">高品质无线蓝牙耳机降噪长续航</div>
+                                        <div class="product-price">¥199.00</div>
+                                        <div class="product-sales">已售 3421</div>
+                                    </div>
+                                </div>
+                                <div class="product-card">
+                                    <div class="product-image">
+                                        <img src="https://via.placeholder.com/150/eeeeee/999999?text=商品4" alt="Product" style="width:100%;height:100%;">
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="product-name">家用多功能料理机搅拌机</div>
+                                        <div class="product-price">¥459.00</div>
+                                        <div class="product-sales">已售 892</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="height: 60px;"></div>
+                        <div class="bottom-nav">
+                            <div class="nav-item active">
+                                <i class="fas fa-home"></i>
+                                <span>首页</span>
+                            </div>
+                            <div class="nav-item">
+                                <i class="fas fa-compass"></i>
+                                <span>分类</span>
+                            </div>
+                            <div class="nav-item">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>购物车</span>
+                            </div>
+                            <div class="nav-item">
+                                <i class="fas fa-file-alt"></i>
+                                <span>订单</span>
+                            </div>
+                            <div class="nav-item">
+                                <i class="fas fa-user"></i>
+                                <span>我的</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 商品详情页 -->
+        <div class="prototype-section">
+            <h2 class="prototype-title">买家端 - 商品详情</h2>
+            <p class="prototype-description">
+                商品详情页展示商品的详细信息，包括图片、价格、描述、规格选择和用户评价。用户可以在此页面将商品加入购物车或直接购买。
+            </p>
+            <div class="prototype-container">
+                <div class="phone-frame">
+                    <div class="screen-title">商品详情</div>
+                    <div class="screen">
+                        <div class="status-bar">
+                            <span>12:30</span>
+                            <div>
+                                <i class="fas fa-signal"></i>
+                                <i class="fas fa-wifi"></i>
+                                <i class="fas fa-battery-three-quarters"></i>
+                            </div>
+                        </div>
+                        <div class="detail-header">
+                            <div class="back-button">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                            <div class="header-title">商品详情</div>
+                            <div class="header-actions">
+                                <div class="header-action">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <div class="header-action">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-gallery">
+                            <img src="https://via.placeholder.com/400x300/ff6b6b/ffffff?text=商品主图" alt="Product" class="gallery-image">
+                            <div class="gallery-indicator">1/5</div>
+                        </div>
+                        <div class="product-basic-info">
+                            <div class="product-detail-price">¥299.00</div>
+                            <div class="product-detail-name">新款智能手表多功能运动监测心率血压防水男女通用</div>
+                            <div class="product-tags">
+                                <div class="product-tag">包邮</div>
+                                <div class="product-tag">7天无理由退换</div>
+                                <div class="product-tag">官方正品</div>
+                            </div>
+                            <div class="product-stats">
+                                <div>销量 1253</div>
+                                <div>收藏 568</div>
+                                <div>好评率 98%</div>
+                            </div>
+                        </div>
+                        <div class="product-options">
+                            <div class="option-item">
+                                <div class="option-label">选择</div>
+                                <div class="option-value">
+                                    颜色、版本、数量
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <div class="option-label">送至</div>
+                                <div class="option-value">
+                                    北京市海淀区
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <div class="option-label">服务</div>
+                                <div class="option-value">
+                                    7天无理由 · 运费险 · 48小时发货
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-detail-section">
+                            <div class="section-title">商品评价(1253)</div>
+                            <div class="review-item" style="border-bottom: 1px solid #f5f5f5; padding-bottom: 10px; margin-bottom: 10px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <div style="display: flex; align-items: center;">
+                                        <img src="https://via.placeholder.com/30/eeeeee/999999?text=头像" alt="User" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+                                        <span style="font-size: 14px; color: #333;">用户***123</span>
+                                    </div>
+                                    <div style="color: #ff9f43; font-size: 12px;">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <div style="font-size: 14px; color: #666; margin-bottom: 5px; line-height: 1.4;">
+                                    手表收到了，质量非常好，功能也很齐全，特别是心率监测很准确，续航也很给力，一次充电可以用一周左右。
+                                </div>
+                                <div style="display: flex; gap: 5px;">
+                                    <img src="https://via.placeholder.com/60/eeeeee/999999?text=评价图" alt="Review" style="width: 60px; height: 60px; border-radius: 5px;">
+                                    <img src="https://via.placeholder.com/60/eeeeee/999999?text=评价图" alt="Review" style="width: 60px; height: 60px; border-radius: 5px;">
+                                </div>
+                                <div style="font-size: 12px; color: #999; margin-top: 5px;">
+                                    2023-06-15 · 黑色 · 标准版
+                                </div>
+                            </div>
+                            <div style="text-align: center; color: #999; font-size: 14px; padding: 10px 0;">
+                                查看全部评价 <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                        <div class="product-detail-section">
+                            <div class="section-title">商品详情</div>
+                            <div class="detail-content">
+                                <p>【品牌】SmartLife</p>
+                                <p>【型号】SW-2023</p>
+                                <p>【颜色】黑色/银色/蓝色</p>
+                                <p>【屏幕】1.4英寸高清彩屏</p>
+                                <p>【防水等级】IP68</p>
+                                <p>【电池容量】300mAh</p>
+                                <p>【功能】心率监测、血压监测、睡眠监测、运动记录、消息提醒</p>
+                            </div>
+                            <img src="https://via.placeholder.com/300x200/eeeeee/999999?text=商品详情图" alt="Detail" class="detail-image">
+                            <img src="https://via.placeholder.com/300x200/eeeeee/999999?text=商品详情图" alt="Detail" class="detail-image">
+                        </div>
+                        <div style="height: 60px;"></div>
+                        <div class="bottom-actions">
+                            <div class="action-icon">
+                                <i class="fas fa-store"></i>
+                                <span>店铺</span>
+                            </div>
+                            <div class="action-icon">
+                                <i class="fas fa-heart"></i>
+                                <span>收藏</span>
+                            </div>
+                            <div class="action-icon">
+                                <i class="fas fa-comment-dots"></i>
+                                <span>客服</span>
+                            </div>
+                            <div class="action-button add-cart-button">加入购物车</div>
+                            <div class="action-button buy-now-button">立即购买</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 订单管理页面 -->
+        <div class="prototype-section">
+            <h2 class="prototype-title">买家端 - 订单管理</h2>
+            <p class="prototype-description">
+                订单管理页面展示用户的所有订单，可以按照不同状态（全部、待付款、待发货、待收货、待评价）进行筛选，用户可以对订单进行支付、确认收货、评价等操作。
+            </p>
+            <div class="prototype-container">
+                <div class="phone-frame">
+                    <div class="screen-title">订单管理</div>
+                    <div class="screen">
+                        <div class="status-bar">
+                            <span>12:30</span>
+                            <div>
+                                <i class="fas fa-signal"></i>
+                                <i class="fas fa-wifi"></i>
+                                <i class="fas fa-battery-three-quarters"></i>
+                            </div>
+                        </div>
+                        <div class="order-header">
+                            <div class="order-title">我的订单</div>
+                        </div>
+                        <div class="order-tabs">
+                            <div class="order-tab active">全部</div>
+                            <div class="order-tab">待付款</div>
+                            <div class="order-tab">待发货</div>
+                            <div class="order-tab">待收货</div>
+                            <div class="order-tab">待评价</div>
+                        </div>
+                        <div class="order-list">
+                            <!-- 订单项1：待付款 -->
+                            <div class="order-item">
+                                <div class="order-shop">
+                                    <i class="fas fa-store shop-icon"></i>
+                                    <div class="shop-name">SmartLife官方旗舰店</div>
+                                    <div class="order-status">待付款</div>
+                                </div>
+                                <div class="order-product">
+                                    <div class="order-product-image">
+                                        <img src="https://via.placeholder.com/80/eeeeee/999999?text=智能手表" alt="Product">
+                                    </div>
+                                    <div class="order-product-info">
+                                        <div class="order-product-name">新款智能手表多功能运动监测心率血压防水男女通用</div>
+                                        <div class="order-product-spec">黑色 · 标准版</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div class="order-product-price">¥299.00</div>
+                                            <div class="order-product-quantity">x1</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-summary">
+                                    <div class="order-total">共1件商品 合计：<span class="order-total-price">¥299.00</span>（含运费¥0.00）</div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="order-action-button">取消订单</button>
+                                    <button class="order-action-button primary">立即付款</button>
+                                </div>
+                            </div>
+                            
+                            <!-- 订单项2：待发货 -->
+                            <div class="order-item">
+                                <div class="order-shop">
+                                    <i class="fas fa-store shop-icon"></i>
+                                    <div class="shop-name">厨房生活家居馆</div>
+                                    <div class="order-status">待发货</div>
+                                </div>
+                                <div class="order-product">
+                                    <div class="order-product-image">
+                                        <img src="https://via.placeholder.com/80/eeeeee/999999?text=料理机" alt="Product">
+                                    </div>
+                                    <div class="order-product-info">
+                                        <div class="order-product-name">家用多功能料理机搅拌机</div>
+                                        <div class="order-product-spec">白色 · 豪华版</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div class="order-product-price">¥459.00</div>
+                                            <div class="order-product-quantity">x1</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-summary">
+                                    <div class="order-total">共1件商品 合计：<span class="order-total-price">¥459.00</span>（含运费¥0.00）</div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="order-action-button">查看物流</button>
+                                    <button class="order-action-button">提醒发货</button>
+                                </div>
+                            </div>
+                            
+                            <!-- 订单项3：待收货 -->
+                            <div class="order-item">
+                                <div class="order-shop">
+                                    <i class="fas fa-store shop-icon"></i>
+                                    <div class="shop-name">时尚服饰专营店</div>
+                                    <div class="order-status">待收货</div>
+                                </div>
+                                <div class="order-product">
+                                    <div class="order-product-image">
+                                        <img src="https://via.placeholder.com/80/eeeeee/999999?text=卫衣" alt="Product">
+                                    </div>
+                                    <div class="order-product-info">
+                                        <div class="order-product-name">时尚休闲连帽卫衣男女同款</div>
+                                        <div class="order-product-spec">灰色 · L码</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div class="order-product-price">¥129.00</div>
+                                            <div class="order-product-quantity">x1</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-summary">
+                                    <div class="order-total">共1件商品 合计：<span class="order-total-price">¥129.00</span>（含运费¥0.00）</div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="order-action-button">查看物流</button>
+                                    <button class="order-action-button primary">确认收货</button>
+                                </div>
+                            </div>
+                            
+                            <!-- 订单项4：待评价 -->
+                            <div class="order-item">
+                                <div class="order-shop">
+                                    <i class="fas fa-store shop-icon"></i>
+                                    <div class="shop-name">数码配件专营店</div>
+                                    <div class="order-status">待评价</div>
+                                </div>
+                                <div class="order-product">
+                                    <div class="order-product-image">
+                                        <img src="https://via.placeholder.com/80/eeeeee/999999?text=耳机" alt="Product">
+                                    </div>
+                                    <div class="order-product-info">
+                                        <div class="order-product-name">高品质无线蓝牙耳机降噪长续航</div>
+                                        <div class="order-product-spec">白色 · 标准版</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div class="order-product-price">¥199.00</div>
+                                            <div class="order-product-quantity">x1</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-summary">
+                                    <div class="order-total">共1件商品 合计：<span class="order-total-price">¥199.00</span>（含运费¥0.00）</div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="order-action-button">申请售后</button>
+                                    <button class="order-action-button">再次购买</button>
+                                    <button class="order-action-button primary">评价商品</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="height: 60px;"></div>
+                        <div class="bottom-nav">
+                            <div class="nav-item">
+                                <i class="fas fa-home"></i>
+                                <span>首页</span>
+                            </div>
+                            <div class="nav-item">
+                                <i class="fas fa-compass"></i>
+                                <span>分类</span>
+                            </div>
+                            <div class="nav-item">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>购物车</span>
+                            </div>
+                            <div class="nav-item active">
+                                <i class="fas fa-file-alt"></i>
+                                <span>订单</span>
+                            </div>
+                            <div class="nav-item">
+                                <i class="fas fa-user"></i>
+                                <span>我的</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 我的店铺页面 -->
+        <div class="prototype-section">
+            <h2 class="prototype-title">卖家端 - 我的店铺</h2>
+            <p class="prototype-description">
+                我的店铺页面是卖家管理自己店铺的主要入口，包括店铺概览、商品管理、订单管理、数据统计等功能。卖家可以通过此页面全面了解店铺运营情况并进行各项管理操作。
+            </p>
+            <div class="prototype-container">
+                <div class="phone-frame">
+                    <div class="screen-title">我的店铺</div>
+                    <div class="screen">
+                        <div class="status-bar">
+                            <span>12:30</span>
+                            <div>
+                                <i class="fas fa-signal"></i>
+                                <i class="fas fa-wifi"></i>
+                                <i class="fas fa-battery-three-quarters"></i>
+                            </div>
+                        </div>
+                        <div class="shop-header">
+                            <div class="shop-title">我的店铺</div>
+                        </div>
+                        <div class="shop-info">
+                            <div class="shop-profile">
+                                <div class="shop-avatar">
+                                    <img src="https://via.placeholder.com/60/4a6bdf/ffffff?text=店铺" alt="Shop">
+                                </div>
+                                <div class="shop-name-info">
+                                    <div class="shop-name">时尚服饰专营店</div>
+                                    <div class="shop-level">店铺等级: 钻石卖家</div>
+                                </div>
+                            </div>
+                            <div class="shop-stats">
+                                <div class="shop-stat-item">
+                                    <div class="shop-stat-value">4.9</div>
+                                    <div class="shop-stat-label">店铺评分</div>
+                                </div>
+                                <div class="shop-stat-item">
+                                    <div class="shop-stat-value">98%</div>
+                                    <div class="shop-stat-label">好评率</div>
+                                </div>
+                                <div class="shop-stat-item">
+                                    <div class="shop-stat-value">45</div>
+                                    <div class="shop-stat-label">商品数量</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="shop-quick-actions">
+                            <div class="quick-action-grid">
+                                <div class="quick-action-item">
+                                    <div class="quick-action-icon">
+                                        <i class="fas fa-plus"></i>
+                                    </div>
+                                    <div class="quick-action-label">发布商品</div>
+                                </div>
+                                <div class="quick-action-item">
+                                    <div class="quick-action-icon">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <div class="quick-action-label">商品管理</div>
+                                </div>
+                                <div class="quick-action-item">
+                                    <div class="quick-action-icon">
+                                        <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div class="quick-action-label">订单发货</div>
+                                </div>
+                                <div class="quick-action-item">
+                                    <div class="quick-action-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="quick-action-label">数据分析</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="shop-section">
+                            <div class="shop-section-header">
+                                <div class="shop-section-title">
+                                    <i class="fas fa-box"></i>
+                                    商品管理
+                                </div>
+                                <div class="shop-section-more">
+                                    查看全部 <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="product-manage-list">
+                                <div class="product-manage-item">
+                                    <div class="product-manage-image">
+                                        <img src="https://via.placeholder.com/100/eeeeee/999999?text=卫衣" alt="Product">
+                                        <div class="product-manage-status">在售</div>
+                                    </div>
+                                    <div class="product-manage-info">
+                                        <div class="product-manage-name">时尚休闲连帽卫衣男女同款</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div class="product-manage-price">¥129.00</div>
+                                            <div class="product-manage-sales">已售 2342</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-manage-item">
+                                    <div class="product-manage-image">
+                                        <img src="https://via.placeholder.com/100/eeeeee/999999?text=T恤" alt="Product">
+                                        <div class="product-manage-status">在售</div>
+                                    </div>
+                                    <div class="product-manage-info">
+                                        <div class="product-manage-name">纯棉短袖T恤印花宽松版</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div class="product-manage-price">¥89.00</div>
+                                            <div class="product-manage-sales">已售 1876</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="shop-section">
+                            <div class="shop-section-header">
+                                <div class="shop-section-title">
+                                    <i class="fas fa-file-alt"></i>
+                                    订单管理
+                                </div>
+                                <div class="shop-section-more">
+                                    查看全部 <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="order-manage-list">
+                                <div class="order-manage-item">
+                                    <div class="order-manage-info">
+                                        <div class="order-manage-id">订单号: 2023061500123</div>
+                                        <div class="order-manage-time">2023-06-15 14:30:25</div>
+                                        <div class="order-manage-product">时尚休闲连帽卫衣男女同款 灰色 L码 x1</div>
+                                    </div>
+                                    <div class="order-manage-status">
+                                        待发货
+                                        <div class="order-manage-price">¥129.00</div>
+                                    </div>
+                                </div>
+                                <div class="order-manage-item">
+                                    <div class="order-manage-info">
+                                        <div class="order-manage-id">订单号: 2023061500098</div>
+                                        <div class="order-manage-time">2023-06-15 10:15:42</div>
+                                        <div class="order-manage-product">纯棉短袖T恤印花宽松版 白色 XL码 x2</div>
+                                    </div>
+                                    <div class="order-manage-status">
+                                        已发货
+                                        <div class="order-manage-price">¥178.00</div>
+                                    </div>
+                                </div>
+                                <div class="order-manage-item">
+                                    <div class="order-manage-info">
+                                        <div class="order-manage-id">订单号: 2023061400256</div>
+                                        <div class="order-manage-time">2023-06-14 16:45:10</div>
+                                        <div class="order-manage-product">时尚休闲连帽卫衣男女同款 黑色 M码 x1</div>
+                                    </div>
+                                    <div class="order-manage-status">
+                                        已完成
+                                        <div class="order-manage-price">¥129.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="shop-section">
+                            <div class="shop-section-header">
+                                <div class="shop-section-title">
+                                    <i class="fas fa-chart-pie"></i>
+                                    数据统计
+                                </div>
+                                <div class="shop-section-more">
+                                    查看详情 <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="data-chart">
+                                <div class="data-chart-line"></div>
+                                <div class="data-chart-dot"></div>
+                                <div class="data-chart-dot"></div>
+                                <div class="data-chart-dot"></div>
+                                <div class="data-chart-dot"></div>
+                            </div>
+                            <div class="data-summary">
+                                <div class="data-summary-item">
+                                    <div class="data-summary-value">¥12,568</div>
+                                    <div class="data-summary-label">本月销售额</div>
+                                </div>
+                                <div class="data-summary-item">
+                                    <div class="data-summary-value">256</div>
+                                    <div class="data-summary-label">本月订单量</div>
+                                </div>
+                                <div class="data-summary-item">
+                                    <div class="data-summary-value">3,254</div>
+                                    <div class="data-summary-label">本月访客数</div>
+                                </div>
+                                <div class="data-summary-item">
+                                    <div class="data-summary-value">7.8%</div>
+                                    <div class="data-summary-label">转化率</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="height: 60px;"></div>
+                        <div class="seller-bottom-nav">
+                            <div class="seller-nav-item">
+                                <i class="fas fa-home"></i>
+                                <span>首页</span>
+                            </div>
+                            <div class="seller-nav-item active">
+                                <i class="fas fa-store"></i>
+                                <span>店铺</span>
+                            </div>
+                            <div class="seller-nav-item">
+                                <i class="fas fa-file-alt"></i>
+                                <span>订单</span>
+                            </div>
+                            <div class="seller-nav-item">
+                                <i class="fas fa-bullhorn"></i>
+                                <span>营销</span>
+                            </div>
+                            <div class="seller-nav-item">
+                                <i class="fas fa-user"></i>
+                                <span>我的</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 首页资讯页面 -->
+        <div class="prototype-section">
+            <h2 class="prototype-title">买家端 - 首页资讯</h2>
+            <p class="prototype-description">
+                首页资讯页面展示商城的最新动态、促销活动和行业资讯，帮助用户了解最新商品信息和优惠活动，提高用户参与度和购买转化率。
+            </p>
+            <div class="prototype-container">
+                <div class="phone-frame">
+                    <div class="screen-title">首页资讯</div>
+                    <div class="screen">
+                        <div class="status-bar">
+                            <span>12:30</span>
+                            <div>
+                                <i class="fas fa-signal"></i>
+                                <i class="fas fa-wifi"></i>
+                                <i class="fas fa-battery-three-quarters"></i>
+                            </div>
+                        </div>
+                        <div class="news-header">
+                            <div class="news-title">资讯中心</div>
+                        </div>
+                        <div class="news-tabs">
+                            <div class="news-tab active">推荐</div>
+                            <div class="news-tab">促销活动</div>
+                            <div class="news-tab">新品上市</div>
+                            <div class="news-tab">行业动态</div>
+                            <div class="news-tab">购物攻略</div>
+                        </div>
+                        <div class="news-search">
+                            <div class="news-search-bar">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="news-search-input" placeholder="搜索资讯内容">
+                            </div>
+                        </div>
+                        <div class="news-banner">
+                            <div class="news-banner-image">
+                                <img src="https://via.placeholder.com/300x150/ff6b6b/ffffff?text=夏季大促" alt="Banner">
+                                <div class="news-banner-title">夏季大促：全场商品低至5折，限时抢购！</div>
+                            </div>
+                        </div>
+                        
+                        <div class="news-section">
+                            <div class="news-section-header">
+                                <div class="news-section-title">
+                                    <i class="fas fa-fire"></i>
+                                    热门资讯
+                                </div>
+                                <div class="news-section-more">
+                                    查看更多 <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="news-list">
+                                <div class="news-item">
+                                    <div class="news-item-image">
+                                        <img src="https://via.placeholder.com/100x70/eeeeee/999999?text=资讯1" alt="News">
+                                    </div>
+                                    <div class="news-item-content">
+                                        <div class="news-item-title">2023年夏季流行趋势：这些单品你不能错过！</div>
+                                        <div class="news-item-info">
+                                            <div>
+                                                <span class="news-item-tag">时尚</span>
+                                                <span>时尚编辑部</span>
+                                            </div>
+                                            <div>2023-06-15</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="news-item">
+                                    <div class="news-item-image">
+                                        <img src="https://via.placeholder.com/100x70/eeeeee/999999?text=资讯2" alt="News">
+                                    </div>
+                                    <div class="news-item-content">
+                                        <div class="news-item-title">智能家居新品发布：让生活更便捷的科技产品</div>
+                                        <div class="news-item-info">
+                                            <div>
+                                                <span class="news-item-tag">科技</span>
+                                                <span>科技频道</span>
+                                            </div>
+                                            <div>2023-06-14</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="news-item">
+                                    <div class="news-item-image">
+                                        <img src="https://via.placeholder.com/100x70/eeeeee/999999?text=资讯3" alt="News">
+                                    </div>
+                                    <div class="news-item-content">
+                                        <div class="news-item-title">健康饮食指南：夏季如何科学搭配营养餐</div>
+                                        <div class="news-item-info">
+                                            <div>
+                                                <span class="news-item-tag">健康</span>
+                                                <span>健康生活</span>
+                                            </div>
+                                            <div>2023-06-13</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="news-section">
+                            <div class="news-section-header">
+                                <div class="news-section-title">
+                                    <i class="fas fa-tags"></i>
+                                    限时促销
+                                </div>
+                                <div class="news-section-more">
+                                    查看更多 <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="news-promo-grid">
+                                <div class="news-promo-item">
+                                    <div class="news-promo-image">
+                                        <img src="https://via.placeholder.com/150x100/eeeeee/999999?text=促销1" alt="Promotion">
+                                    </div>
+                                    <div class="news-promo-content">
+                                        <div class="news-promo-title">夏季服装清仓，全场5折起</div>
+                                        <div class="news-promo-info">
+                                            <div>剩余 2 天</div>
+                                            <div>已有 2.3k 人参与</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="news-promo-item">
+                                    <div class="news-promo-image">
+                                        <img src="https://via.placeholder.com/150x100/eeeeee/999999?text=促销2" alt="Promotion">
+                                    </div>
+                                    <div class="news-promo-content">
+                                        <div class="news-promo-title">数码产品节，满1000减100</div>
+                                        <div class="news-promo-info">
+                                            <div>剩余 5 天</div>
+                                            <div>已有 1.8k 人参与</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="news-promo-item">
+                                    <div class="news-promo-image">
+                                        <img src="https://via.placeholder.com/150x100/eeeeee/999999?text=促销3" alt="Promotion">
+                                    </div>
+                                    <div class="news-promo-content">
+                                        <div class="news-promo-title">美妆个护，买2送1</div>
+                                        <div class="news-promo-info">
+                                            <div>剩余 3 天</div>
+                                            <div>已有 3.5k 人参与</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="news-promo-item">
+                                    <div class="news-promo-image">
+                                        <img src="https://via.placeholder.com/150x100/eeeeee/999999?text=促销4" alt="Promotion">
+                                    </div>
+                                    <div class="news-promo-content">
+                                        <div class="news-promo-title">家居家纺，满300减50</div>
+                                        <div class="news-promo-info">
+                                            <div>剩余 7 天</div>
+                                            <div>已有 1.2k 人参与</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="news-section">
+                            <div class="news-section-header">
+                                <div class="news-section-title">
+                                    <i class="fas fa-lightbulb"></i>
+                                    热门话题
+                                </div>
+                                <div class="news-section-more">
+                                    查看更多 <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="news-topic-list">
+                                <div class="news-topic-item">
+                                    <div class="news-topic-image">
+                                        <img src="https://via.placeholder.com/120x80/eeeeee/999999?text=话题1" alt="Topic">
+                                    </div>
+                                    <div class="news-topic-title">夏日穿搭指南</div>
+                                </div>
+                                <div class="news-topic-item">
+                                    <div class="news-topic-image">
+                                        <img src="https://via.placeholder.com/120x80/eeeeee/999999?text=话题2" alt="Topic">
+                                    </div>
+                                    <div class="news-topic-title">智能家居体验</div>
+                                </div>
+                                <div class="news-topic-item">
+                                    <div class="news-topic-image">
+                                        <img src="https://via.placeholder.com/120x80/eeeeee/999999?text=话题3" alt="Topic">
+                                    </div>
+                                    <div class="news-topic-title">美食探店</div>
+                                </div>
+                                <div class="news-topic-item">
+                                    <div class="news-topic-image">
+                                        <img src="https://via.placeholder.com/120x80/eeeeee/999999?text=话题4" alt="Topic">
+                                    </div>
+                                    <div class="news-topic-title">亲子活动推荐</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="news-section">
+                            <div class="news-section-header">
+                                <div class="news-section-title">
+                                    <i class="fas fa-newspaper"></i>
+                                    行业动态
+                                </div>
+                                <div class="news-section-more">
+                                    查看更多 <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="news-list">
+                                <div class="news-item">
+                                    <div class="news-item-image">
+                                        <img src="https://via.placeholder.com/100x70/eeeeee/999999?text=动态1" alt="News">
+                                    </div>
+                                    <div class="news-item-content">
+                                        <div class="news-item-title">电商行业新政策解读：对消费者有哪些影响？</div>
+                                        <div class="news-item-info">
+                                            <div>
+                                                <span class="news-item-tag">政策</span>
+                                                <span>行业观察</span>
+                                            </div>
+                                            <div>2023-06-12</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="news-item">
+                                    <div class="news-item-image">
+                                        <img src="https://via.placeholder.com/100x70/eeeeee/999999?text=动态2" alt="News">
+                                    </div>
+                                    <div class="news-item-content">
+                                        <div class="news-item-title">2023年上半年消费趋势报告：这些品类增长最快</div>
+                                        <div class="news-item-info">
+                                            <div>
+                                                <span class="news-item-tag">报告</span>
+                                                <span>数据分析</span>
+                                            </div>
+                                            <div>2023-06-10</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="height: 60px;"></div>
+                        <div class="bottom-nav">
+                            <div class="nav-item">
+                                <i class="fas fa-home"></i>
+                                <span>首页</span>
+                            </div>
+                            <div class="nav-item active">
+                                <i class="fas fa-newspaper"></i>
+                                <span>资讯</span>
+                            </div>
+                            <div class="nav-item">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>购物车</span>
+                            </div>
+                            <div class="nav-item">
+                                <i class="fas fa-file-alt"></i>
+                                <span>订单</span>
+                            </div>
+                            <div class="nav-item">
+                                <i class="fas fa-user"></i>
+                                <span>我的</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 广告申请页面 -->
+        <div class="prototype-section">
+            <h2 class="prototype-title">卖家端 - 广告申请</h2>
+            <p class="prototype-description">
+                广告申请页面是卖家推广自己商品和店铺的重要功能，卖家可以在此页面查看可用的广告位、提交广告申请、查看历史申请记录，以提高店铺和商品的曝光率。
+            </p>
+            <div class="prototype-container">
+                <div class="phone-frame">
+                    <div class="screen-title">广告申请</div>
+                    <div class="screen">
+                        <div class="status-bar">
+                            <span>12:30</span>
+                            <div>
+                                <i class="fas fa-signal"></i>
+                                <i class="fas fa-wifi"></i>
+                                <i class="fas fa-battery-three-quarters"></i>
+                            </div>
+                        </div>
+                        <div class="ad-header">
+                            <div class="ad-title">广告申请</div>
+                        </div>
+                        <div class="ad-tabs">
+                            <div class="ad-tab active">广告位</div>
+                            <div class="ad-tab">申请表单</div>
+                            <div class="ad-tab">申请记录</div>
+                        </div>
+                        
+                        <!-- 广告位展示 -->
+                        <div class="ad-section">
+                            <div class="ad-section-title">
+                                <i class="fas fa-bullhorn"></i>
+                                热门广告位
+                            </div>
+                            <div class="ad-positions">
+                                <div class="ad-position-item hot">
+                                    <div class="ad-position-name">首页轮播图</div>
+                                    <div class="ad-position-desc">展示在APP首页顶部，曝光率最高</div>
+                                    <div class="ad-position-price">¥1000/天</div>
+                                    <div class="ad-position-stats">
+                                        <span>日均曝光: 50,000+</span>
+                                        <span>点击率: 5.2%</span>
+                                    </div>
+                                </div>
+                                <div class="ad-position-item hot">
+                                    <div class="ad-position-name">首页推荐商品</div>
+                                    <div class="ad-position-desc">展示在首页推荐商品区域</div>
+                                    <div class="ad-position-price">¥500/天</div>
+                                    <div class="ad-position-stats">
+                                        <span>日均曝光: 30,000+</span>
+                                        <span>点击率: 4.8%</span>
+                                    </div>
+                                </div>
+                                <div class="ad-position-item">
+                                    <div class="ad-position-name">分类页广告</div>
+                                    <div class="ad-position-desc">展示在分类页顶部</div>
+                                    <div class="ad-position-price">¥300/天</div>
+                                    <div class="ad-position-stats">
+                                        <span>日均曝光: 20,000+</span>
+                                        <span>点击率: 3.5%</span>
+                                    </div>
+                                </div>
+                                <div class="ad-position-item">
+                                    <div class="ad-position-name">资讯页广告</div>
+                                    <div class="ad-position-desc">展示在资讯页内容中</div>
+                                    <div class="ad-position-price">¥200/天</div>
+                                    <div class="ad-position-stats">
+                                        <span>日均曝光: 15,000+</span>
+                                        <span>点击率: 2.8%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 广告申请表单 -->
+                        <div class="ad-section">
+                            <div class="ad-section-title">
+                                <i class="fas fa-edit"></i>
+                                申请表单
+                            </div>
+                            <div class="ad-form">
+                                <div class="ad-form-group">
+                                    <label class="ad-form-label">广告位置</label>
+                                    <select class="ad-form-select">
+                                        <option>首页轮播图</option>
+                                        <option>首页推荐商品</option>
+                                        <option>分类页广告</option>
+                                        <option>资讯页广告</option>
+                                        <option>搜索结果页广告</option>
+                                    </select>
+                                </div>
+                                <div class="ad-form-group">
+                                    <label class="ad-form-label">广告类型</label>
+                                    <select class="ad-form-select">
+                                        <option>商品推广</option>
+                                        <option>店铺推广</option>
+                                        <option>活动推广</option>
+                                    </select>
+                                </div>
+                                <div class="ad-form-group">
+                                    <label class="ad-form-label">推广内容</label>
+                                    <select class="ad-form-select">
+                                        <option>时尚休闲连帽卫衣男女同款</option>
+                                        <option>纯棉短袖T恤印花宽松版</option>
+                                        <option>时尚服饰专营店</option>
+                                        <option>夏季大促活动</option>
+                                    </select>
+                                </div>
+                                <div class="ad-form-group">
+                                    <label class="ad-form-label">投放时间</label>
+                                    <div style="display: flex; gap: 10px;">
+                                        <input type="text" class="ad-form-input" placeholder="开始日期" style="flex: 1;">
+                                        <input type="text" class="ad-form-input" placeholder="结束日期" style="flex: 1;">
+                                    </div>
+                                </div>
+                                <div class="ad-form-group">
+                                    <label class="ad-form-label">广告标题</label>
+                                    <input type="text" class="ad-form-input" placeholder="请输入广告标题">
+                                </div>
+                                <div class="ad-form-group">
+                                    <label class="ad-form-label">广告描述</label>
+                                    <textarea class="ad-form-textarea" placeholder="请输入广告描述"></textarea>
+                                </div>
+                                <div class="ad-form-group">
+                                    <label class="ad-form-label">广告图片</label>
+                                    <div class="ad-upload-area">
+                                        <div class="ad-upload-icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <div class="ad-upload-text">
+                                            点击上传图片，支持JPG、PNG格式，建议尺寸1200x400px
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ad-form-group">
+                                    <label class="ad-form-label">预算设置</label>
+                                    <input type="text" class="ad-form-input" placeholder="请输入广告预算">
+                                </div>
+                                <button class="ad-submit-button">提交申请</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 申请记录 -->
+                        <div class="ad-section">
+                            <div class="ad-section-title">
+                                <i class="fas fa-history"></i>
+                                申请记录
+                            </div>
+                            <div class="ad-history-list">
+                                <div class="ad-history-item">
+                                    <div class="ad-history-header">
+                                        <div class="ad-history-title">首页轮播图广告</div>
+                                        <div class="ad-history-status approved">已通过</div>
+                                    </div>
+                                    <div class="ad-history-info">
+                                        <span>申请时间: 2023-06-10</span>
+                                        <span>投放时间: 2023-06-15 ~ 2023-06-20</span>
+                                    </div>
+                                    <div class="ad-history-desc">
+                                        夏季新品上市，全场满300减50，限时抢购！
+                                    </div>
+                                    <div class="ad-history-actions">
+                                        <div class="ad-history-action">查看详情</div>
+                                        <div class="ad-history-action">数据分析</div>
+                                    </div>
+                                </div>
+                                <div class="ad-history-item">
+                                    <div class="ad-history-header">
+                                        <div class="ad-history-title">首页推荐商品广告</div>
+                                        <div class="ad-history-status pending">审核中</div>
+                                    </div>
+                                    <div class="ad-history-info">
+                                        <span>申请时间: 2023-06-12</span>
+                                        <span>投放时间: 2023-06-18 ~ 2023-06-25</span>
+                                    </div>
+                                    <div class="ad-history-desc">
+                                        纯棉短袖T恤印花宽松版，夏季必备单品，舒适透气。
+                                    </div>
+                                    <div class="ad-history-actions">
+                                        <div class="ad-history-action">查看详情</div>
+                                        <div class="ad-history-action">取消申请</div>
+                                    </div>
+                                </div>
+                                <div class="ad-history-item">
+                                    <div class="ad-history-header">
+                                        <div class="ad-history-title">分类页广告</div>
+                                        <div class="ad-history-status rejected">已拒绝</div>
+                                    </div>
+                                    <div class="ad-history-info">
+                                        <span>申请时间: 2023-06-05</span>
+</body>
+</html> 
